@@ -1,3 +1,7 @@
+require('dotenv').config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const { NODE_URL, MNEMONIC } = process.env;
+
 module.exports = {
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -11,10 +15,15 @@ module.exports = {
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
     },
-    contracts_directory: "./src/contracts",
-    contracts_build_directory: "./src/abis",
+    goerli: {
+      provider: () => new HDWalletProvider(MNEMONIC, NODE_URL),
+      network_id: "5",
+      port: 8545,
+      gas: 4465030
+    }
   },
-
+  contracts_directory: "./src/contracts/",
+  contracts_build_directory: "./src/abis",
   compilers: {
     solc: {
       version: "^0.8.0",     // Fetch exact version from solc-bin (default: truffle's version)
