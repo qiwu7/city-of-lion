@@ -37,4 +37,29 @@ contract ERC721 {
         address owner = _tokenOwner[tokenId];
         return owner != address(0);
     }
+
+    /// @notice Count all NFTs assigned to an owner
+    /// @dev NFTs assigned to the zero address are considered invalid, and this
+    ///  function throws for queries about the zero address.
+    /// @param _owner An address for whom to query the balance
+    /// @return The number of NFTs owned by `_owner`, possibly zero
+    function balanceOf(address _owner) external view returns (uint256) {
+        require(_owner != address(0), 'owner queries about zero address');
+        return _ownerTokenCount[_owner];
+    }
+
+    /// @notice Find the owner of an NFT
+    /// @dev NFTs assigned to zero address are considered invalid, and queries
+    ///  about them do throw.
+    /// @param _tokenId The identifier for an NFT
+    /// @return The address of the owner of the NFT
+    function ownerOf(uint256 _tokenId) external view returns (address) {
+        address owner = _tokenOwner[_tokenId];
+
+        require(owner != address(0), 'tokenId does not exist');
+
+        return owner;
+    }
+
+    
 }
