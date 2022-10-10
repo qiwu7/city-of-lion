@@ -22,14 +22,14 @@ contract ERC721 {
     // Mapping from owner to number of owned tokens
     mapping(address => uint256) private _ownerTokenCount;
 
-    function _mint(address to, uint256 tokenId) internal {
-        require(to != address(0), 'ERC721: minting to the zero address');
-        require(!_exists(tokenId), 'ERC721: token already minted');
+    function _mint(address _to, uint256 _tokenId) internal virtual {
+        require(_to != address(0), 'ERC721: minting to the zero address');
+        require(!_exists(_tokenId), 'ERC721: token already minted');
 
-        _tokenOwner[tokenId] = to;
-        _ownerTokenCount[to] += 1;
+        _tokenOwner[_tokenId] = _to;
+        _ownerTokenCount[_to] += 1;
 
-        emit Transfer(address(0), to, tokenId);
+        emit Transfer(address(0), _to, _tokenId);
     }
 
     // check if tokenId exists
@@ -60,6 +60,4 @@ contract ERC721 {
 
         return owner;
     }
-
-    
 }
